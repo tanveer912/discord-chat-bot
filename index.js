@@ -28,6 +28,15 @@ db.get("responding").then(value => {
 })
 
 
+function updateEncouragements(encouragingMessage) {
+  db.get("encouragements").then(encouragements => {
+    encouragements.push([encouragingMessage])
+    db.set("encouragements", encouragements)
+  })
+}
+
+
+
 function getQuote(){
   return fetch ("https://zenquotes.io/api/random")
       .then(res =>{
@@ -54,3 +63,23 @@ client.on("message", msg =>{
 })
 
 client.login(process.env.TOKEN)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
