@@ -52,6 +52,21 @@ function getQuote(){
 
 }
 
+
+
+function deleteEncouragement(index) {
+  db.get("encouragements").then(encouragements => {
+    if (encouragements.length > index) {
+      encouragements.splice(index, 1)
+      db.set("encouragements", encouragements)
+    }
+  })  
+}
+
+
+
+
+
 client.on("ready",() => {
 console.log('Logged in as ${client}')
 })
