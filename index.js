@@ -80,30 +80,27 @@ client.on("ready",() => {
 console.log('Logged in as ${client}')
 })
 
-client.on("message", msg =>{
-  if(msg.content === "ping") {
-    msg.reply("pong")
+client.on("message", msg => {
+  if (msg.author.bot) return
+
+  if (msg.content === "$inspire") {
+    getQuote().then(quote => msg.channel.send(quote))
   }
+
+  db.get("responding").then(responding =>{
+    if (responding && sadWords.some(word => msg.content.includes(word))) {
+      db.get("encouragements").then(encouragements => {
+        const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)]
+        msg.reply(encouragement)
+      })
+    }
+  })
+
+
+  if (msg.content.startsWith("$new")) {
+    encouragingMessage = msg.content.split("$new ")[1]
+    updateEncouragements(encouragingMessage)
+    msg.channel.send("New encouraging message added.")
+  }
+
 })
-
-client.login(process.env.TOKEN)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
